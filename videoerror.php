@@ -10,7 +10,7 @@ require('config.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-	  <title>Video Error</title>
+	  <title><?php echo $lang['videoerror']; ?></title>
     <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
     <script
     src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -33,10 +33,10 @@ require('config.php');
 <br><br>
   <div class="ui error message">
   <div class="header">
-    There were some errors with your request.
+  <?php echo $lang['videoerrortext']; ?>
   </div>
   <ul class="list">
-    <li>Be sure you write correct link.</li>
+    <li><?php echo $lang['videoerrortextlist']; ?></li>
 
   </ul>
 </div>

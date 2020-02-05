@@ -12,27 +12,111 @@
       $find->execute(array(@$_SESSION['id']));
       $result = $find->fetch();
 ?>
+        <?php
+        if(isset($_SESSION["id"])){
+          $currentlang = $result["language"];
+          $languagefile="lang/";
+          include('/' . $languagefile . $currentlang . '.php');
+          
+          }else{
+          include('/lang/en.php');
+          }
+          ?>
+<?php
+if($result["language"] == "tr"){
+
+	function timeConvert ( $zaman ){
+	  $zaman =  strtotime($zaman);
+	  $zaman_farki = time() - $zaman;
+	  $saniye = $zaman_farki;
+	  $dakika = round($zaman_farki/60);
+	  $saat = round($zaman_farki/3600);
+	  $gun = round($zaman_farki/86400);
+	  $hafta = round($zaman_farki/604800);
+	  $ay = round($zaman_farki/2419200);
+	  $yil = round($zaman_farki/29030400);
+	  if( $saniye < 60 ){
+		if ($saniye == 0){
+		  return "kısa süre önce";
+		} else {
+		  return $saniye .' saniye önce';
+		}
+	  } else if ( $dakika < 60 ){
+		return $dakika .' dakika önce';
+	  } else if ( $saat < 24 ){
+		return $saat.' saat önce';
+	  } else if ( $gun < 7 ){
+		return $gun .' gün önce';
+	  } else if ( $hafta < 4 ){
+		return $hafta.' hafta önce';
+	  } else if ( $ay < 12 ){
+		return $ay .' ay önce';
+	  } else {
+		return $yil.' yıl önce';
+	  }
+	}
+  
+  }
+  if($result["language"] == "en"){
+  
+	function timeConvert ( $zaman ){
+	  $zaman =  strtotime($zaman);
+	  $zaman_farki = time() - $zaman;
+	  $saniye = $zaman_farki;
+	  $dakika = round($zaman_farki/60);
+	  $saat = round($zaman_farki/3600);
+	  $gun = round($zaman_farki/86400);
+	  $hafta = round($zaman_farki/604800);
+	  $ay = round($zaman_farki/2419200);
+	  $yil = round($zaman_farki/29030400);
+	  if( $saniye < 60 ){
+		if ($saniye == 0){
+		  return "Shortly before";
+		} else {
+		  return $saniye .' seconds ago';
+		}
+	  } else if ( $dakika < 60 ){
+		return $dakika .' minutes ago';
+	  } else if ( $saat < 24 ){
+		return $saat.' hours ago';
+	  } else if ( $gun < 7 ){
+		return $gun .' days ago';
+	  } else if ( $hafta < 4 ){
+		return $hafta.' weeks ago';
+	  } else if ( $ay < 12 ){
+		return $ay .' months ago';
+	  } else {
+		return $yil.' years ago';
+	  }
+	}
+  
+  }
+  
+  ?>
+  
 <div class="row">
 <div class="ui inverted segment">
       <div class="ui secondary inverted pointing menu">
-        <a href="index.php" class="active item"><i class="tr flag"></i>PlotoriusNetwork</a>
-        <a class="item">Trends</a>
-        <a class="item">Channels</a>
-        <a class="item">Support</a>
+        <a href="index.php" class="active item"><?php echo $lang['flag']; ?>PlotoriusNetwork</a>
+        <a class="item"><?php echo $lang['trends']; ?></a>
+        <a class="item"><?php echo $lang['channels']; ?></a>
+        <a class="item"><?php echo $lang['support']; ?></a>
         <?php if(isset($_SESSION['id'])) : ?>
         <div class="right item">
         <?php $find = $connection->prepare("select * from users where id=?;");
 $find->execute(array($_SESSION['id']));
 $result = $find->fetch();
-$showusername = $result["username"]; ?>
+$showusername = $result["username"]; 
+
+?>
 <img class="ui circular image" width=32px height=32px src="<?php echo $result["avatar"]; ?>"></img>&nbsp;&nbsp; <?php echo "<font color=white>$showusername</font>"; ?>&nbsp;&nbsp;&nbsp;&nbsp;
 
 <div class="ui icon top left pointing dropdown">
   <i class="ellipsis vertical icon"></i>
   <div class="menu">
-    <a id="upload" class="item ui inverted button"><i class="upload icon"></i>Upload</a>
-    <a id="settings" class="item ui inverted button"><i class="cog icon"></i>Settings</a>
-    <a href="/logout.php" class="item"><i class="sign-out icon"></i>Logout</a>
+    <a id="upload" class="item ui inverted button"><i class="upload icon"></i><?php echo $lang['upload']; ?></a>
+    <a id="settings" class="item ui inverted button"><i class="cog icon"></i><?php echo $lang['settings']; ?></a>
+    <a href="/logout.php" class="item"><i class="sign-out icon"></i><?php echo $lang['logout']; ?></a>
   </div>
 </div>
 
@@ -45,7 +129,7 @@ $showusername = $result["username"]; ?>
         <?php endif; ?>
         <?php if(!isset($_SESSION['id'])) : ?>
         <div class="right item">
-          <a id="register" class="ui inverted button"><i class="user icon"></i>Log in & Register</a>
+          <a id="register" class="ui inverted button"><i class="user icon"></i><?php echo $lang['login&register']; ?></a>
         </div>
         <?php endif; ?>
       </div>
@@ -81,33 +165,33 @@ $showusername = $result["username"]; ?>
 <div id="upload-modal" class="ui modal">
     <i class="close icon"></i>
     <div class="header">
-        <center>Upload Video</center>
+        <center><?php echo $lang['uploadvideo']; ?></center>
     </div>
     <div class="image content">
         <div class="description">
         <form action="" method=post enctype="multipart/form-data" class="ui form">
   <div class="field">
-    <label>Video Name</label>
-    <input type="text" name="videoname" id="videoname" placeholder="Video Name" required>
+    <label><?php echo $lang['videoname']; ?></label>
+    <input type="text" name="videoname" id="videoname" placeholder="<?php echo $lang['videoname']; ?>" required>
   </div>
   <div class="field">
-    <label>Video Description</label>
-    <input type="text" name="videodescription" id="videodescription" placeholder="Video Description" required>
+    <label><?php echo $lang['videodescription']; ?></label>
+    <input type="text" name="videodescription" id="videodescription" placeholder="<?php echo $lang['videodescription']; ?>" required>
   </div>
   <div class="field">
-    <label>Video Category</label>
-    <select class="form-control" name="videocategory" id="videocategory" required>
+    <label><?php echo $lang['videocategory']; ?></label>
+    <select class="ui fluid dropdown" name="videocategory" id="videocategory" required>
       <option value="Normal">Normal</option>
       <option value="Game">Game</option>
       <option value="Music">Music</option>
     </select>
   </div>
   <div class="field">
-    <label>Video Thumbnail File</label>
+    <label><?php echo $lang['videothumbnailfile']; ?></label>
     <input type="file" accept="image/*" name="thumbnail" id="thumbnail" required>
   </div>
   <div class="field">
-    <label>Video File</label>
+    <label><?php echo $lang['videofile']; ?></label>
     <input type="file" accept="video/*" name="videofile" id="videofile" required>
   </div>
   <div class="field">
@@ -215,75 +299,75 @@ $showusername = $result["username"]; ?>
 <?php if(@$uploaderrortype == 9) : ?>
   <div class="ui negative message">
   <div class="header">
-  Video category must be only Normal,Music or Game.
+  <?php echo $lang['uploaderrortype9']; ?>
   </div>
   </div>
 <?php endif; ?>
 <?php if(@$uploaderrortype == 1) : ?>
   <div class="ui negative message">
   <div class="header">
-  Thumbnail file size must be less than 5MB.
+  <?php echo $lang['uploaderrortype1']; ?>
   </div>
   </div>
 <?php endif; ?>
 <?php if(@$uploaderrortype == 2) : ?>
   <div class="ui negative message">
   <div class="header">
-  Thumbnail file type must be PNG,JPG.
+  <?php echo $lang['uploaderrortype2']; ?>
   </div>
   </div>
 <?php endif; ?>
 <?php if(@$uploaderrortype == 3) : ?>
   <div class="ui negative message">
   <div class="header">
-  Video file size must be less than 500MB.
+  <?php echo $lang['uploaderrortype3']; ?>
   </div>
   </div>
 <?php endif; ?>
 <?php if(@$uploaderrortype == 4) : ?>
   <div class="ui negative message">
   <div class="header">
-  Video file type must be MP4,AVI,MPG or MOV.
+  <?php echo $lang['uploaderrortype4']; ?>
   </div>
   </div>
 <?php endif; ?>
 <?php if(@$uploaderrortype == 5) : ?>
   <div class="ui negative message">
   <div class="header">
-  Thumbnail could not load.
+  <?php echo $lang['uploaderrortype5']; ?>
   </div>
-  <p>Please, try again later.
+  <p><?php echo $lang['uploaderrortype5-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$uploaderrortype == 6) : ?>
   <div class="ui negative message">
   <div class="header">
-  Video file could not load.
+  <?php echo $lang['uploaderrortype6']; ?>
   </div>
-  <p>Please, try again later.
+  <p><?php echo $lang['uploaderrortype6-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$uploaderrortype == 7) : ?>
   <div class="ui positive message">
   <div class="header">
-  Video uploaded successfully.
+  <?php echo $lang['uploaderrortype7']; ?>
   </div>
   </div>
 <?php endif; ?>
 <?php if(@$uploaderrortype == 8) : ?>
   <div class="ui negative message">
   <div class="header">
-    Something went wrong.
+  <?php echo $lang['uploaderrortype8']; ?>
   </div>
-  <p>Please, try again later.
+  <p><?php echo $lang['uploaderrortype8-1']; ?>
 </p></div>
 <?php endif; ?>
 <div id="loader" style="display:none;"><center><img width=32px height=32px src="/img/loading.gif"></img></center></div>
     <div class="actions">
         <div class="ui red deny button">
-            Cancel
+        <?php echo $lang['cancel']; ?>
         </div>
-        <input type="submit" value="Upload" name="upload" id="upload" class="ui green button" onclick="document.getElementById('loader').style.display = 'block' ;"/>
+        <input type="submit" value="<?php echo $lang['upload']; ?>" name="upload" id="upload" class="ui green button" onclick="document.getElementById('loader').style.display = 'block' ;"/>
         </form>
     </div>
 </div>
@@ -291,7 +375,7 @@ $showusername = $result["username"]; ?>
 <div id="register-modal" class="ui long modal">
     <i class="close icon"></i>
     <div class="header">
-        <center>Log in & Register</center>
+        <center><?php echo $lang['login&register']; ?></center>
     </div>
     <div class="image content">
         <div class="description">
@@ -301,14 +385,14 @@ $showusername = $result["username"]; ?>
   <div class="ui vertical divider"></div>
     <div class="column">
     <form method=post action="" class="ui form">
-    <center><b>Login</b></center><br>
+    <center><b><?php echo $lang['login']; ?></b></center><br>
   <div class="field">
-    <label>Username</label>
-    <input type="text" name="username" id="username" placeholder="Username" required>
+    <label><?php echo $lang['username']; ?></label>
+    <input type="text" name="username" id="username" placeholder="<?php echo $lang['username']; ?>" required>
   </div>
   <div class="field">
-    <label>Password</label>
-    <input type="password" name="password" id="password" placeholder="Password" required>
+    <label><?php echo $lang['password']; ?></label>
+    <input type="password" name="password" id="password" placeholder="<?php echo $lang['password']; ?>" required>
   </div>
   
   <?php
@@ -367,61 +451,61 @@ $showusername = $result["username"]; ?>
 <?php if(@$loginerrortype == 1) : ?>
   <div class="ui negative message">
   <div class="header">
-    This username is not exists.
+  <?php echo $lang['loginerrortype1']; ?>
   </div>
-  <p>Please make sure you to use this name.
+  <p><?php echo $lang['loginerrortype1-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$loginerrortype == 2) : ?>
   <div class="ui negative message">
   <div class="header">
-    This password is not correct.
+  <?php echo $lang['loginerrortype2']; ?>
   </div>
-  <p>Please make sure you to use this password.
+  <p><?php echo $lang['loginerrortype2-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$loginerrortype == 3) : ?>
   <div class="ui negative message">
   <div class="header">
-    Your account was banned.
+  <?php echo $lang['loginerrortype3']; ?>
   </div>
-  <p>If you think it's wrong contact us.
+  <p><?php echo $lang['loginerrortype3-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$loginerrortype == 4) : ?>
   <div class="ui negative message">
   <div class="header">
-    Something went wrong.
+  <?php echo $lang['loginerrortype4']; ?>
   </div>
-  <p>Try again later, please.
+  <p><?php echo $lang['loginerrortype4-1']; ?>
 </p></div>
 <?php endif; ?>
-  <button class="ui button" id=login name=login type="submit">Login</button>
+  <button class="ui button" id=login name=login type="submit"><?php echo $lang['login']; ?></button>
 </form>
     </div>
     <div class="column">
     <form method=post action="" class="ui form">
-    <center><b>Register</b></center><br>
+    <center><b><?php echo $lang['register']; ?></b></center><br>
   <div class="field">
-    <label>Username</label>
-    <input type="text" name="username" id=username placeholder="Username" required>
+    <label><?php echo $lang['username']; ?></label>
+    <input type="text" name="username" id=username placeholder="<?php echo $lang['username']; ?>" required>
   </div>
   <div class="field">
-    <label>Email</label>
-    <input type="email" name="email" id="email" placeholder="Email" required>
+    <label><?php echo $lang['email']; ?></label>
+    <input type="email" name="email" id="email" placeholder="<?php echo $lang['email']; ?>" required>
   </div>
   <div class="field">
-    <label>Password</label>
-    <input type="password" name="password" id=password placeholder="Password" required>
+    <label><?php echo $lang['password']; ?></label>
+    <input type="password" name="password" id=password placeholder="<?php echo $lang['password']; ?>" required>
   </div>
   <div class="field">
-    <label>Password Retry</label>
-    <input type="password" name="passwordretry" id=passwordretry placeholder="Password Retry" required>
+    <label><?php echo $lang['passwordretry']; ?></label>
+    <input type="password" name="passwordretry" id=passwordretry placeholder="<?php echo $lang['passwordretry']; ?>" required>
   </div>
   <div class="field">
     <div class="ui checkbox">
       <input type="checkbox" tabindex="0" required>
-      <label>I agree to the Terms and Conditions</label>
+      <label><?php echo $lang['iagreetermsandconditions']; ?></label>
     </div>
   </div>
   <?php
@@ -474,44 +558,44 @@ $showusername = $result["username"]; ?>
 <?php if(@$registererrortype == 1) : ?>
   <div class="ui negative message">
   <div class="header">
-    This username is already exists.
+  <?php echo $lang['registererrortype1']; ?>
   </div>
-  <p>Please use different username.
+  <p><?php echo $lang['registererrortype1-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$registererrortype == 2) : ?>
   <div class="ui negative message">
   <div class="header">
-    This email is already exists.
+  <?php echo $lang['registererrortype2']; ?>
   </div>
-  <p>Please use different email.
+  <p><?php echo $lang['registererrortype2-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$registererrortype == 3) : ?>
   <div class="ui negative message">
   <div class="header">
-    This passwords aren't same.
+  <?php echo $lang['registererrortype3']; ?>
   </div>
-  <p>Please be sure write correct.
+  <p><?php echo $lang['registererrortype3-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$registererrortype == 4) : ?>
   <div class="ui positive message">
   <div class="header">
-  Your user registration was successful.
+  <?php echo $lang['registererrortype4']; ?>
   </div>
-  <p>You may now log-in with the username you have chosen</p>
+  <p><?php echo $lang['registererrortype4-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$registererrortype == 5) : ?>
   <div class="ui negative message">
   <div class="header">
-    Something went wrong.
+  <?php echo $lang['registererrortype5']; ?>
   </div>
-  <p>Try again later, please.
+  <p><?php echo $lang['registererrortype5-1']; ?>
 </p></div>
 <?php endif; ?>
-  <button class="ui button" id=register name=register type="submit">Register</button>
+  <button class="ui button" id=register name=register type="submit"><?php echo $lang['register']; ?></button>
 </form>
 </div>
   </div>
@@ -521,7 +605,7 @@ $showusername = $result["username"]; ?>
     </div>
     <div class="actions">
         <div class="ui red deny button">
-            Cancel
+        <?php echo $lang['cancel']; ?>
         </div>
     </div>
 </div>
@@ -604,45 +688,65 @@ $showusername = $result["username"]; ?>
             });
 </script>
 
+<script>
+            $(document).ready(function(){
+                $('#changelanguage').click(function(){
+                    $('#changelanguage-modal')
+  .modal({
+    blurring: true
+  })
+  .modal('show')
+;
+                });
+            });
+</script>
+
 <div id="settings-modal" class="ui modal">
     <i class="close icon"></i>
     <div class="header">
-        <center>Settings</center>
+        <center><?php echo $lang['settings']; ?></center>
     </div>
     <div class="image content">
         <div class="description">
 
-    <button id="profileinformation" class="fluid ui black basic labeled icon button">
-      <i class="info icon"></i>
-      Profile Informations
-    </button><br>
-
-<div class="ui two column centered grid">
-    <div class="four column centered row">
+<div class="ui two column grid">
+  <div class="four column row">
     <div class="column">
-    <button id="usernamechange" class="ui blue basic labeled icon button">
+     <button id="usernamechange" class="ui blue basic labeled icon button">
       <i class="cog icon"></i>
-      Change Username
+      <?php echo $lang['changeusername']; ?>
      </button>
     </div>
     <div class="column">
-    <button id="emailchange" class="ui blue basic labeled icon button">
+     <button id="emailchange" class="ui blue basic labeled icon button">
       <i class="cog icon"></i>
-      Change Email
+      <?php echo $lang['changeemail']; ?>
+     </button>
+    </div>
+    <div class="column">
+     <button id="passwordchange" class="ui blue basic labeled icon button">
+      <i class="cog icon"></i>
+      <?php echo $lang['changepassword']; ?>
      </button>
     </div>
   </div>
-  <div class="four column centered row">
+  <div class="four column row">
     <div class="column">
-    <button id="passwordchange" class="ui blue basic labeled icon button">
+     <button id="avatarchange" class="ui blue basic labeled icon button">
       <i class="cog icon"></i>
-      Change Password
+      <?php echo $lang['changeavatar']; ?>
      </button>
     </div>
     <div class="column">
-    <button id="avatarchange" class="ui blue basic labeled icon button">
-      <i class="cog icon"></i>
-      Change Avatar
+     <button id="profileinformation" class="ui blue basic labeled icon button">
+      <i class="info icon"></i>
+      <?php echo $lang['profileinformations']; ?>
+     </button>
+    </div>
+    <div class="column">
+     <button id="changelanguage" class="ui blue basic labeled icon button">
+      <i class="language icon"></i>
+      <?php echo $lang['changelanguage']; ?>
      </button>
     </div>
   </div>
@@ -652,7 +756,7 @@ $showusername = $result["username"]; ?>
     </div>
     <div class="actions">
         <div class="ui red deny button">
-            Cancel
+        <?php echo $lang['cancel']; ?>
         </div>
     </div>
 </div>
@@ -660,22 +764,22 @@ $showusername = $result["username"]; ?>
 <div id="usernamechange-modal" class="ui modal">
     <i class="close icon"></i>
     <div class="header">
-        <center>Change Username</center>
+        <center><?php echo $lang['changeusername']; ?></center>
     </div>
     <div class="image content">
         <div class="description">
         <form action="" method=post class="ui form">
   <div class="field">
-    <label>Old Username</label>
+    <label><?php echo $lang['oldusername']; ?></label>
     <input readonly="" placeholder="<?php echo $result["username"]; ?>">
   </div>
   <div class="field">
-    <label>New Username</label>
-    <input type="text" name="newusername" id=newusername placeholder="New Username" required>
+    <label><?php echo $lang['newusername']; ?></label>
+    <input type="text" name="newusername" id=newusername placeholder="<?php echo $lang['newusername']; ?>" required>
   </div>
   <div class="field">
-    <label>Password</label>
-    <input type="password" name="password" id=password placeholder="Password" required>
+    <label><?php echo $lang['password']; ?></label>
+    <input type="password" name="password" id=password placeholder="<?php echo $lang['password']; ?>" required>
 
     <?php
 	if ( isset($_POST['changeusername']) ){
@@ -729,40 +833,40 @@ $showusername = $result["username"]; ?>
   <?php if(@$changeusernameerrortype == "1") : ?>
   <div class="ui negative message">
   <div class="header">
-    This password is not correct.
+  <?php echo $lang['changeusernameerrortype1']; ?>
   </div>
-  <p>Please make sure you to use this password.
+  <p><?php echo $lang['changeusernameerrortype1-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$changeusernameerrortype == "2") : ?>
   <div class="ui negative message">
   <div class="header">
-    You're already using this username.
+  <?php echo $lang['changeusernameerrortype2']; ?>
   </div>
-  <p>Please use different username.
+  <p><?php echo $lang['changeusernameerrortype2-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$changeusernameerrortype == "3") : ?>
   <div class="ui negative message">
   <div class="header">
-  This username is already taken.
+  <?php echo $lang['changeusernameerrortype3']; ?>
   </div>
-  <p>Please use different username.
+  <p><?php echo $lang['changeusernameerrortype3-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$changeusernameerrortype == "4") : ?>
   <div class="ui positive message">
   <div class="header">
-  Changing is successfully.
+  <?php echo $lang['changeusernameerrortype4']; ?>
   </div>
   </div>
 <?php endif; ?>
 <?php if(@$changeusernameerrortype == "5") : ?>
   <div class="ui negative message">
   <div class="header">
-  Something went wrong.
+  <?php echo $lang['changeusernameerrortype5']; ?>
   </div>
-  <p>Please, try again later.
+  <p><?php echo $lang['changeusernameerrortype5-1']; ?>
 </p></div>
 <?php endif; ?>
   </div>
@@ -771,10 +875,10 @@ $showusername = $result["username"]; ?>
     </div>
     <div class="actions">
         <div class="ui red deny button">
-            Cancel
+        <?php echo $lang['cancel']; ?>
         </div>
         <button type=submit id=changeusername name=changeusername class="ui green button">
-            Save
+        <?php echo $lang['save']; ?>
         </button>
         </form>
     </div>
@@ -783,22 +887,22 @@ $showusername = $result["username"]; ?>
 <div id="emailchange-modal" class="ui modal">
     <i class="close icon"></i>
     <div class="header">
-        <center>Change Email</center>
+        <center><?php echo $lang['changeemail']; ?></center>
     </div>
     <div class="image content">
         <div class="description">
         <form action="" method=post class="ui form">
   <div class="field">
-    <label>Old Email</label>
+    <label><?php echo $lang['oldemail']; ?></label>
     <input readonly="" placeholder="<?php echo $result["email"]; ?>">
   </div>
   <div class="field">
-    <label>New Email</label>
-    <input type="email" name="newemail" id=newemail placeholder="New Email" required>
+    <label><?php echo $lang['newemail']; ?></label>
+    <input type="email" name="newemail" id=newemail placeholder="<?php echo $lang['newemail']; ?>" required>
   </div>
   <div class="field">
-    <label>Password</label>
-    <input type="password" name="password" id=password placeholder="Password" required>
+    <label><?php echo $lang['password']; ?></label>
+    <input type="password" name="password" id=password placeholder="<?php echo $lang['password']; ?>" required>
 
     <?php
 	if ( isset($_POST['changeemail']) ){
@@ -846,40 +950,40 @@ $showusername = $result["username"]; ?>
   <?php if(@$changeemailerrortype == "1") : ?>
   <div class="ui negative message">
   <div class="header">
-    This password is not correct.
+  <?php echo $lang['changeemailerrortype1']; ?>
   </div>
-  <p>Please make sure you to use this password.
+  <p><?php echo $lang['changeemailerrortype1-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$changeemailerrortype == "2") : ?>
   <div class="ui negative message">
   <div class="header">
-    You're already using this email.
+  <?php echo $lang['changeemailerrortype2']; ?>
   </div>
-  <p>Please use different email.
+  <p><?php echo $lang['changeemailerrortype2-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$changeemailerrortype == "3") : ?>
   <div class="ui negative message">
   <div class="header">
-  This email is already taken.
+  <?php echo $lang['changeemailerrortype3']; ?>
   </div>
-  <p>Please use different email.
+  <p><?php echo $lang['changeemailerrortype3-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$changeemailerrortype == "4") : ?>
   <div class="ui success message">
   <div class="header">
-  Changing is successfully.
+  <?php echo $lang['changeemailerrortype4']; ?>
   </div>
   </div>
 <?php endif; ?>
 <?php if(@$changeemailerrortype == "5") : ?>
   <div class="ui negative message">
   <div class="header">
-  Something went wrong.
+  <?php echo $lang['changeemailerrortype5']; ?>
   </div>
-  <p>Please, try again later.
+  <p><?php echo $lang['changeemailerrortype5-1']; ?>
 </p></div>
 <?php endif; ?>
   </div>
@@ -887,10 +991,10 @@ $showusername = $result["username"]; ?>
     </div>
     <div class="actions">
         <div class="ui red deny button">
-            Cancel
+        <?php echo $lang['cancel']; ?>
         </div>
         <button type=submit id=changeemail name=changeemail class="ui green button">
-            Save
+        <?php echo $lang['save']; ?>
         </button>
         </form>
     </div>
@@ -899,22 +1003,22 @@ $showusername = $result["username"]; ?>
 <div id="passwordchange-modal" class="ui modal">
     <i class="close icon"></i>
     <div class="header">
-        <center>Change Password</center>
+        <center><?php echo $lang['changepassword']; ?></center>
     </div>
     <div class="image content">
         <div class="description">
         <form action="" method=post class="ui form">
   <div class="field">
-    <label>Old Password</label>
-    <input type="password" name="password" id=password placeholder="Old Password" required>
+    <label><?php echo $lang['oldpassword']; ?></label>
+    <input type="password" name="password" id=password placeholder="<?php echo $lang['oldpassword']; ?>" required>
   </div>
   <div class="field">
-    <label>New Password</label>
-    <input type="password" name="newpassword" id=newpassword placeholder="New Password" required>
+    <label><?php echo $lang['newpassword']; ?></label>
+    <input type="password" name="newpassword" id=newpassword placeholder="<?php echo $lang['newpassword']; ?>" required>
   </div>
   <div class="field">
-    <label>New Password (Retry)</label>
-    <input type="password" name="newpasswordretry" id="newpasswordretry" placeholder="New Password (Retry)" required>
+    <label><?php echo $lang['newpasswordretry']; ?></label>
+    <input type="password" name="newpasswordretry" id="newpasswordretry" placeholder="<?php echo $lang['newpasswordretry']; ?>" required>
 
     <?php
 	if ( isset($_POST['changepassword']) ){
@@ -962,40 +1066,40 @@ $showusername = $result["username"]; ?>
   <?php if(@$changepassworderrortype == "1") : ?>
   <div class="ui negative message">
   <div class="header">
-    This password is not correct.
+  <?php echo $lang['changepassworderrortype1']; ?>
   </div>
-  <p>Please make sure you to use this password.
+  <p><?php echo $lang['changepassworderrortype1-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$changepassworderrortype == "2") : ?>
   <div class="ui negative message">
   <div class="header">
-    You're already using this password.
+  <?php echo $lang['changepassworderrortype2']; ?>
   </div>
-  <p>Please use different password.
+  <p><?php echo $lang['changepassworderrortype2-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$changepassworderrortype == "3") : ?>
   <div class="ui negative message">
   <div class="header">
-  New passwords aren't same.
+  <?php echo $lang['changepassworderrortype3']; ?>
   </div>
-  <p>Please be sure write correct.
+  <p><?php echo $lang['changepassworderrortype3-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$changepassworderrortype == "4") : ?>
   <div class="ui positive message">
   <div class="header">
-  Changing is successfully.
+  <?php echo $lang['changepassworderrortype4']; ?>
   </div>
   </div>
 <?php endif; ?>
 <?php if(@$changepassworderrortype == "5") : ?>
   <div class="ui negative message">
   <div class="header">
-  Something went wrong.
+  <?php echo $lang['changepassworderrortype5']; ?> 
   </div>
-  <p>Please, try again later.
+  <p><?php echo $lang['changepassworderrortype5-1']; ?>
 </p></div>
 <?php endif; ?>
 
@@ -1004,10 +1108,10 @@ $showusername = $result["username"]; ?>
     </div>
     <div class="actions">
         <div class="ui red deny button">
-            Cancel
+        <?php echo $lang['cancel']; ?>
         </div>
         <button type=submit id=changepassword name=changepassword class="ui green button">
-            Save
+        <?php echo $lang['save']; ?>
         </button>
         </form>
     </div>
@@ -1016,14 +1120,14 @@ $showusername = $result["username"]; ?>
 <div id="avatarchange-modal" class="ui modal">
     <i class="close icon"></i>
     <div class="header">
-        <center>Change Avatar</center>
+        <center><?php echo $lang['changeavatar']; ?></center>
     </div>
     <div class="image content">
         <div class="description">
         <form action="" method=post enctype="multipart/form-data" class="ui form">
-        <center><b>Old Avatar</b><br><br>
+        <center><b><?php echo $lang['oldavatar']; ?></b><br><br>
         <img src="<?php echo $result["avatar"]; ?>" width=128px height=128px></img><br><br>
-        <b>New Avatar</b><br><br>
+        <b><?php echo $lang['newavatar']; ?></b><br><br>
         <div class="field">
         <input type="file" name="newavatar" id="newavatar" required>
 
@@ -1031,7 +1135,7 @@ $showusername = $result["username"]; ?>
 	if ( isset($_POST['changeavatar']) ){
     if ($_FILES["newavatar"]["size"]<1024*1024){
  
-      if ($_FILES["newavatar"]["type"]=="image/png"){
+      if ($_FILES["newavatar"]["type"]=="image/png" || $_FILES["newavatar"]["type"]=="image/jpeg"){
 
           $dosya_adi   =    $_FILES["newavatar"]["name"];
 
@@ -1096,36 +1200,36 @@ foreach (array_rand($seed, 30) as $k) $random .= $seed[$k];
   <?php if(@$changeavatarerrortype == "1") : ?>
   <div class="ui negative message">
   <div class="header">
-  Picture size must be less than 1MB
+  <?php echo $lang['changeavatarerrortype1']; ?>
   </div>
   </div>
 <?php endif; ?>
 <?php if(@$changeavatarerrortype == "2") : ?>
   <div class="ui negative message">
   <div class="header">
-  Picture type must be only PNG
+  <?php echo $lang['changeavatarerrortype2']; ?>
   </div>
   </div>
 <?php endif; ?>
 <?php if(@$changeavatarerrortype == "3") : ?>
   <div class="ui negative message">
   <div class="header">
-  Avatar is cannot upload.
+  <?php echo $lang['changeavatarerrortype3']; ?>
   </div>
   </div>
 <?php endif; ?>
 <?php if(@$changeavatarerrortype == "4") : ?>
   <div class="ui negative message">
   <div class="header">
-  Something went wrong.
+  <?php echo $lang['changeavatarerrortype4']; ?>
   </div>
-  <p>Please, try again later.
+  <p><?php echo $lang['changeavatarerrortype4-1']; ?>
 </p></div>
 <?php endif; ?>
 <?php if(@$changeavatarerrortype == "5") : ?>
   <div class="ui positive message">
   <div class="header">
-  Changing is successfully.
+  <?php echo $lang['changeavatarerrortype5']; ?>
   </div>
   </div>
 <?php endif; ?>
@@ -1137,10 +1241,10 @@ foreach (array_rand($seed, 30) as $k) $random .= $seed[$k];
     </div>
     <div class="actions">
         <div class="ui red deny button">
-            Cancel
+        <?php echo $lang['cancel']; ?>
         </div>
         <button type=submit id=changeavatar name=changeavatar class="ui green button">
-            Save
+        <?php echo $lang['save']; ?>
         </button>
         </form>
     </div>
@@ -1149,7 +1253,7 @@ foreach (array_rand($seed, 30) as $k) $random .= $seed[$k];
 <div id="profileinformation-modal" class="ui modal">
     <i class="close icon"></i>
     <div class="header">
-        <center>Profile Informations</center>
+        <center><?php echo $lang['profileinformations']; ?></center>
     </div>
     <div class="image content">
         <div class="description">
@@ -1159,27 +1263,137 @@ foreach (array_rand($seed, 30) as $k) $random .= $seed[$k];
     <input readonly="" placeholder="<?php echo $result["id"]; ?>">
   </div>
   <div class="field">
-    <label>Username</label>
+    <label><?php echo $lang['username']; ?></label>
     <input readonly="" placeholder="<?php echo $result["username"]; ?>">
   </div>
   <div class="field">
-    <label>Email</label>
+    <label><?php echo $lang['email']; ?></label>
     <input readonly="" placeholder="<?php echo $result["email"]; ?>">
   </div>
   <div class="field">
-    <label>Reg Date</label>
+    <label><?php echo $lang['language']; ?></label>
+    <input readonly="" placeholder="<?php echo $result["language"]; ?>">
+  </div>
+  <div class="field">
+    <label><?php echo $lang['regdate']; ?></label>
     <input readonly="" placeholder="<?php echo $result["regdate"]; ?>">
   </div>
   <div class="field">
-    <label>Last Login</label>
+    <label><?php echo $lang['lastlogin']; ?></label>
     <input readonly="" placeholder="<?php echo $result["lastlogin"]; ?>">
   </div>
         </div>
     </div>
     <div class="actions">
         <div class="ui red deny button">
-            Cancel
+        <?php echo $lang['cancel']; ?>
         </div>
+        </form>
+    </div>
+</div>
+
+<div id="changelanguage-modal" class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+        <center><?php echo $lang['changelanguage']; ?></center>
+    </div>
+    <div class="image content">
+        <div class="description">
+        <form action="" method=post class="ui form">
+  <div class="field">
+    <label><?php echo $lang['yourlanguage']; ?></label>
+    <input readonly="" placeholder="<?php echo $result["language"]; ?>">
+  </div>
+    <div class="field">
+     <label><?php echo $lang['newlanguage']; ?></label>
+      <select name="newlanguage" id="newlanguage" class="ui fluid dropdown">
+        <option value="en">English</option>
+        <option value="tr">Türkçe</option>
+      </select>
+
+    <?php
+	if ( isset($_POST['changelanguage']) ){
+        $oldlanguage = $result["language"];
+        $newlanguage = htmlspecialchars($_POST['newlanguage']);
+
+        if($newlanguage != "en" && $newlanguage != "tr"){
+          $changelanguageerrortype = 1;?>
+          <script type="text/javascript"> $('#changelanguage-modal').modal('show'); </script>
+          <?php         
+        }else{
+
+        if($oldlanguage == $newlanguage){
+          $changelanguageerrortype = 2;?>
+          <script type="text/javascript"> $('#changelanguage-modal').modal('show'); </script>
+          <?php
+
+        }else{
+
+          $updatelanguage = $connection->prepare("UPDATE users SET language=? WHERE id=?");
+          $updatelanguage->execute(array($newlanguage,$_SESSION['id']));
+
+          if($updatelanguage){
+            header("refresh:2;url=index.php");
+            $changelanguageerrortype = 3;?>
+            <script type="text/javascript"> $('#changelanguage-modal').modal('show'); </script>
+            <?php   
+
+          }else{
+
+            $changelanguageerrortype = 4;?>
+            <script type="text/javascript"> $('#changelanguage-modal').modal('show'); </script>
+            <?php  
+          }
+        }
+      }
+    }
+
+?>
+
+<?php if(@$changelanguageerrortype == "0") : ?>
+<?php endif; ?>
+  <?php if(@$changelanguageerrortype == "1") : ?>
+  <div class="ui negative message">
+  <div class="header">
+    <?php echo $lang['changelanguageerrortype1']; ?>
+  </div>
+  </div>
+<?php endif; ?>
+<?php if(@$changelanguageerrortype == "2") : ?>
+  <div class="ui negative message">
+  <div class="header">
+  <?php echo $lang['changelanguageerrortype2']; ?>
+  </div>
+  <p><?php echo $lang['changelanguageerrortype2-1']; ?>
+</p></div>
+<?php endif; ?>
+<?php if(@$changelanguageerrortype == "3") : ?>
+  <div class="ui positive message">
+  <div class="header">
+  <?php echo $lang['changelanguageerrortype3']; ?>
+  </div>
+  <p><?php echo $lang['changelanguageerrortype3-1']; ?>
+  </p></div>
+<?php endif; ?>
+<?php if(@$changelanguageerrortype == "4") : ?>
+  <div class="ui negative message">
+  <div class="header">
+  <?php echo $lang['changelanguageerrortype4']; ?>
+  </div>
+  <p><?php echo $lang['changelanguageerrortype4-1']; ?>
+</p></div>
+<?php endif; ?>
+
+  </div>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui red deny button">
+        <?php echo $lang['cancel']; ?>
+        </div>
+        <button type=submit id=changelanguage name=changelanguage class="ui green button">
+        <?php echo $lang['save']; ?>
+        </button>
         </form>
     </div>
 </div>

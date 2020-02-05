@@ -9,7 +9,7 @@ if($_SERVER['REQUEST_URI'] == "/index.php/"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Plotorius Network | Homepage</title>
+    <title>Plotorius Network</title>
     <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
     <script
     src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -19,38 +19,6 @@ if($_SERVER['REQUEST_URI'] == "/index.php/"){
 </head>
 
 <body style="background-color:#1f1f1f;">
-<?php
-function timeConvert ( $zaman ){
-	$zaman =  strtotime($zaman);
-	$zaman_farki = time() - $zaman;
-	$saniye = $zaman_farki;
-	$dakika = round($zaman_farki/60);
-	$saat = round($zaman_farki/3600);
-	$gun = round($zaman_farki/86400);
-	$hafta = round($zaman_farki/604800);
-	$ay = round($zaman_farki/2419200);
-	$yil = round($zaman_farki/29030400);
-	if( $saniye < 60 ){
-		if ($saniye == 0){
-			return "Shortly before";
-		} else {
-			return $saniye .' seconds ago';
-		}
-	} else if ( $dakika < 60 ){
-		return $dakika .' minutes ago';
-	} else if ( $saat < 24 ){
-		return $saat.' hours ago';
-	} else if ( $gun < 7 ){
-		return $gun .' days ago';
-	} else if ( $hafta < 4 ){
-		return $hafta.' weeks ago';
-	} else if ( $ay < 12 ){
-		return $ay .' months ago';
-	} else {
-		return $yil.' years ago';
-	}
-}
-?>
 
 <?php include('navbar.php'); ?>
 
@@ -77,7 +45,7 @@ $result1 = $find->fetch();
         <a><?php echo $result->videocategory; ?></a>
       </div>
 	  <div class="right floated meta">
-        <a>Views: <?php echo $result->videoviews; ?></a>
+        <a><?php echo $lang['views']; ?>: <?php echo $result->videoviews; ?></a>
       </div>
     </div>
     <div class="extra content">

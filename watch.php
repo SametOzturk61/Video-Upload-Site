@@ -46,40 +46,10 @@ $updateviews = $connection->prepare("UPDATE videos SET videoviews=? WHERE id=?")
 $updateviews->execute(array($newview,$videoid));
 
 ?>
-<?php
-function timeConvert ( $zaman ){
-	$zaman =  strtotime($zaman);
-	$zaman_farki = time() - $zaman;
-	$saniye = $zaman_farki;
-	$dakika = round($zaman_farki/60);
-	$saat = round($zaman_farki/3600);
-	$gun = round($zaman_farki/86400);
-	$hafta = round($zaman_farki/604800);
-	$ay = round($zaman_farki/2419200);
-	$yil = round($zaman_farki/29030400);
-	if( $saniye < 60 ){
-		if ($saniye == 0){
-			return "Shortly before";
-		} else {
-			return $saniye .' seconds ago';
-		}
-	} else if ( $dakika < 60 ){
-		return $dakika .' minutes ago';
-	} else if ( $saat < 24 ){
-		return $saat.' hours ago';
-	} else if ( $gun < 7 ){
-		return $gun .' days ago';
-	} else if ( $hafta < 4 ){
-		return $hafta.' weeks ago';
-	} else if ( $ay < 12 ){
-		return $ay .' months ago';
-	} else {
-		return $yil.' years ago';
-	}
-}
-?>
+
 <?php require('navbar.php'); 
 ?>
+
 <?php
 
 $find = $connection->prepare("select * from videos where id=?;");
@@ -93,8 +63,8 @@ $result1 = $find->fetch();
 $find = $connection->prepare("select * from users where id=?;");
 $find->execute(array(@$_SESSION['id']));
 $acc = $find->fetch();
+ ?>
 
-?>
 <div class="container">
 
 <div class="ui two column centered grid">
@@ -114,7 +84,7 @@ $acc = $find->fetch();
         <input type=hidden name=uid value="<?php echo $_SESSION['id']; ?>">
         <input type=hidden name=vid value="<?php echo $result["id"]; ?>">
         <button id="deletevideo" name="deletevideo" style="border: none; background-color: inherit; cursor: pointer; ">
-        <font color=white>Delete</font></button><?php
+        <font color=white><?php echo $lang['delete']; ?></font></button><?php
         if ( isset($_POST['deletevideo']) ){
           $uid = $_POST['uid'];
           $vid = $_POST['vid'];
@@ -145,12 +115,12 @@ $acc = $find->fetch();
         ?>
   </form>
   <?php endif; ?><br>
-  Views: <?php echo $result["videoviews"]; ?><br><br>
+  <?php echo $lang['views']; ?>: <?php echo $result["videoviews"]; ?><br><br>
   <hr><br>
   <img class="ui middle aligned image" width=32px height=32px src="<?php echo $result1["avatar"]; ?>">
   <span><font color=white size=2px><?php echo $result1["username"]; ?> • </font><font size=2px color=white><?php echo timeConvert($result["videouploaddate"]); ?></font></span><br><br>
   <font size=2px color=white><?php echo $result["videodesc"]; ?></font><br><br>
-  <font size=2px color=lightgrey>Video Category: <a href=#><?php echo $result["videocategory"]; ?></a></font><br><br>
+  <font size=2px color=lightgrey><?php echo $lang['videocategory']; ?>: <a href=#><?php echo $result["videocategory"]; ?></a></font><br><br>
   </div>
 </div>
 
@@ -166,7 +136,7 @@ $final = $statement->fetchAll(PDO::FETCH_OBJ);
 <?php
 if(!isset($_SESSION["id"])){?>
   <div class="ui horizontal divider">
-    <font color=White>Login for make comment</font>
+    <font color=White><?php echo $lang['loginforcomment']; ?></font>
   </div>
   <?php
   }
@@ -192,9 +162,9 @@ if(isset($_SESSION["id"])){?>
         </div>
         </div>
         <div class="ui buttons right aligned right floated left aligned">
-        <button type="reset" class="ui secondary button">Cancel</button>
+        <button type="reset" class="ui secondary button"><?php echo $lang['cancel']; ?></button>
         <div class="or grey"></div>
-        <button type="submit" name=makecomment id=makecomment class="ui secondary button">Send</button>
+        <button type="submit" name=makecomment id=makecomment class="ui secondary button"><?php echo $lang['send']; ?></button>
         </div>
 
   <?php if ( isset($_POST['makecomment']) ){
@@ -250,7 +220,7 @@ $result3 = $find->fetch();
         <input type=hidden name=uid value="<?php echo $_SESSION['id']; ?>">
         <input type=hidden name=mid value="<?php echo $result->id; ?>">
         <button id="deletemessage" name="deletemessage" style="border: none; background-color: inherit; cursor: pointer; ">
-        <font color=white>Delete</font></button><?php
+        <font color=white><?php echo $lang['delete']; ?></font></button><?php
         if ( isset($_POST['deletemessage']) ){
         $uid = $_POST['uid'];
         $mid = $_POST['mid'];

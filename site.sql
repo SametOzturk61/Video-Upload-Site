@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 05 Şub 2020, 09:45:47
+-- Üretim Zamanı: 05 Şub 2020, 14:47:12
 -- Sunucu sürümü: 5.6.24
 -- PHP Sürümü: 5.6.8
 
@@ -48,7 +48,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `avatar` varchar(255) NOT NULL DEFAULT '/img/avatar/default.png',
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `ban` int(11) NOT NULL DEFAULT '0' COMMENT '0 = Normal, 1 = Banned'
+  `ban` int(11) NOT NULL DEFAULT '0' COMMENT '0 = Normal, 1 = Banned',
+  `language` varchar(255) NOT NULL DEFAULT 'en'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
