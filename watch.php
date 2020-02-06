@@ -96,10 +96,13 @@ $acc = $find->fetch();
               if($vid != $result["id"]){}
               else{
                 $videodelete = $connection->prepare("DELETE FROM videos WHERE id=?");
-                $work = $videodelete->execute(array("$videoid"));
+                $videodeletework = $videodelete->execute(array("$videoid"));
         
                 $videosrc = $result['videothumbnail'];
                 $videothumbnail = $result['videosrc'];
+
+                $videomessagedelete = $connection->prepare("DELETE FROM comments WHERE videoid=?");
+                $videomessagedeletework = $videomessagedelete->execute(array("$videoid"));
         
                 if($videodelete){
                     unlink($_SERVER['DOCUMENT_ROOT'] . "/" ."$videosrc");

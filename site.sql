@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 05 Şub 2020, 14:47:12
+-- Üretim Zamanı: 06 Şub 2020, 12:47:32
 -- Sunucu sürümü: 5.6.24
 -- PHP Sürümü: 5.6.8
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` int(255) NOT NULL,
   `accountid` int(255) NOT NULL,
-  `videoid` int(255) NOT NULL,
+  `videoid` varchar(255) NOT NULL,
   `comment` text NOT NULL,
   `date` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
