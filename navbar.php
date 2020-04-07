@@ -3,7 +3,7 @@
   echo "<script>javascript:history.go(-1)</script>";
 }
 ?>
-<?php require('/config.php'); 
+<?php require('config.php'); 
 @session_start(); 
 @ob_start();
 ?>
@@ -16,10 +16,10 @@
         if(isset($_SESSION["id"])){
           $currentlang = $result["language"];
           $languagefile="lang/";
-          include('/' . $languagefile . $currentlang . '.php');
+          include($languagefile . $currentlang . '.php');
           
           }else{
-          include('/lang/en.php');
+          include('lang/en.php');
           }
           ?>
   
