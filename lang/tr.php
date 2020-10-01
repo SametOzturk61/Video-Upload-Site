@@ -98,7 +98,7 @@ $lang = array(
 "uploaderrortype6" => "Video dosyası yüklenemedi.",
 "uploaderrortype6-1" => "Lütfen, daha sonra tekrar deneyin.",
 "uploaderrortype7" => "Video başarılı bir şekilde yüklendi.",
-"uploaderrortype8" => "Birşey ters gitti.",
+"uploaderrortype8" => "Bir şey ters gitti.",
 "uploaderrortype8-1" => "Lütfen, daha sonra tekrar deneyin..",
 "uploaderrortype9" => "Video kategorisi sadece Normal,Music veya Game olmalıdır.",
 
@@ -107,8 +107,8 @@ $lang = array(
 "loginerrortype2" => "Şifre doğru değil.",
 "loginerrortype2-1" => "Lütfen bu şifreyi kullandığından emin ol.",
 "loginerrortype3" => "Hesabın banlanmış.",
-"loginerrortype3-1" => "Eğer birşeylerin yanlış olduğu düşünüyorsan, bizimle iletişime geç.",
-"loginerrortype4" => "Birşey ters gitti.",
+"loginerrortype3-1" => "Eğer bir şeylerin yanlış olduğu düşünüyorsan, bizimle iletişime geç.",
+"loginerrortype4" => "Bir şey ters gitti.",
 "loginerrortype4-1" => "Lütfen, daha sonra tekrar deneyin.",
 
 "registererrortype1" => "Bu kullanıcı adı zaten var.",
@@ -119,7 +119,7 @@ $lang = array(
 "registererrortype3-1" => "Doğru yazdığınızdan emin olun.",
 "registererrortype4" => "Kayıt olma işlemi başarıyla gerçekleşti.",
 "registererrortype4-1" => "Seçmiş olduğunuz kullanıcı adıyla giriş yapabilirsiniz.",
-"registererrortype5" => "Birşey ters gitti.",
+"registererrortype5" => "Bir şey ters gitti.",
 "registererrortype5-1" => "Lütfen, daha sonra tekrar deneyin.",
 
 "changeusernameerrortype1" => "Bu şifre doğru değil.",
@@ -129,7 +129,7 @@ $lang = array(
 "changeusernameerrortype3" => "Bu kullanıcı adı zaten alınmış.",
 "changeusernameerrortype3-1" => "Lütfen farklı bir kullanıcı adı kullan.",
 "changeusernameerrortype4" => "Başarıyla değiştirildi.",
-"changeusernameerrortype5" => "Birşey ters gitti.",
+"changeusernameerrortype5" => "Bir şey ters gitti.",
 "changeusernameerrortype5-1" => "Lütfen, daha sonra tekrar deneyin.",
 
 "changeemailerrortype1" => "Bu şifre doğru değil.",
@@ -139,7 +139,7 @@ $lang = array(
 "changeemailerrortype3" => "Bu email zaten alınmış.",
 "changeemailerrortype3-1" => "Lütfen farklı bir email kullan.",
 "changeemailerrortype4" => "Başarıyla değiştirildi.",
-"changeemailerrortype5" => "Birşey ters gitti.",
+"changeemailerrortype5" => "Bir şey ters gitti.",
 "changeemailerrortype5-1" => "Lütfen, daha sonra tekrar deneyin.",
 
 "changepassworderrortype1" => "Bu şifre doğru değil.",
@@ -149,13 +149,13 @@ $lang = array(
 "changepassworderrortype3" => "Yeni şifreler uyuşmuyor.",
 "changepassworderrortype3-1" => "Lütfen, doğru yazdığından emin ol.",
 "changepassworderrortype4" => "Başarıyla değiştirildi.",
-"changepassworderrortype5" => "Birşey ters gitti.",
+"changepassworderrortype5" => "Bir şey ters gitti.",
 "changepassworderrortype5-1" => "Lütfen, daha sonra tekrar deneyin.",
 
 "changeavatarerrortype1" => "Fotoğraf boyutu 1MB'dan fazla olamaz.",
 "changeavatarerrortype2" => "Fotoğraf tipi sadece PNG veya JPG olabilir.",
 "changeavatarerrortype3" => "Avatar fotoğrafı yüklenemedi.",
-"changeavatarerrortype4" => "Birşey ters gitti.",
+"changeavatarerrortype4" => "Bir şey ters gitti.",
 "changeavatarerrortype4-1" => "Lütfen, daha sonra tekrar deneyin.",
 "changeavatarerrortype5" => "Başarıyla değiştirildi.",
 
@@ -164,7 +164,7 @@ $lang = array(
 "changelanguageerrortype2-1" => "Lütfen farklı bir dil seçiniz.",
 "changelanguageerrortype3" => "Başarıyla değiştirildi.",
 "changelanguageerrortype3-1" => "Sayfanız yeniden yüklenecek.",
-"changelanguageerrortype4" => "Birşey ters gitti.",
+"changelanguageerrortype4" => "Bir şey ters gitti.",
 "changelanguageerrortype4-1" => "Lütfen, daha sonra tekrar deneyin.",
 
 "videoerror" => "Video Hatası",
